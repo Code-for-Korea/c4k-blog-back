@@ -173,7 +173,8 @@ public class GithubController {
     @PostMapping("/oauth")
     public JSONResponse RenewingAccessTokenWithRefreshToken(
             HttpServletResponse response,
-            @RequestBody AuthenticateVO authenticateVO
+            @CookieValue(value = "GSESSIONID", required = false) String gsession_id,
+            @CookieValue(value = "REFRESH_TOKEN", required = false) String ref_token
     ) {
         RestTemplate restTemplate = new RestTemplate();
 
@@ -181,13 +182,13 @@ public class GithubController {
 
         UriComponents uri = UriComponentsBuilder.fromHttpUrl(url).build();
 
-        Session one = sessionService.findOne(authenticateVO.getSession_id());
+        Session one = sessionService.findOne(gsession_id);
 
         MultiValueMap<String, String> responseBody = new LinkedMultiValueMap<String, String>();
         responseBody.add("client_id", client_id);
         responseBody.add("client_secret", clientSecret);
-        responseBody.add("refresh_token", authenticateVO.getRefresh_token());
-        responseBody.add("grant_type", authenticateVO.getGrant_type());
+        responseBody.add("refresh_token", ref_token);
+        responseBody.add("grant_type", "refresh_token");
 
         HashMap resultMap = restTemplate.postForObject(uri.toString(), responseBody, HashMap.class);
 
