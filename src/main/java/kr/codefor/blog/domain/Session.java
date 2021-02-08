@@ -52,6 +52,7 @@ public class Session {
     }
 
     public void renewAccessToken(String accessToken, String refreshToken) {
+        this.sessionId = GenerateSessionId();
         this.accessToken = accessToken;
         this.expiresIn = LocalDateTime.now().plusSeconds(28800);
         this.createdAt = LocalDateTime.now();
