@@ -76,7 +76,7 @@ public class GithubController {
             String fileName = post.getTitle()
                     .replaceAll("[^ 가-힣a-zA-Z0-9]", "")
                     .replaceAll("\s", "-") + "-" + generateRandom(5) + ".md";
-            String url = "https://api.github.com/repos/Code-for-Korea/c4k-blog/contents/blog/_posts/" +
+            String url = "https://api.github.com/repos/Code-for-Korea/c4k-blog-front/contents/_posts/" +
                     LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd-")) +
                     fileName;
 
@@ -108,7 +108,7 @@ public class GithubController {
         HashMap<String, Object> result = new HashMap<String, Object>();
 
 
-        String url = "https://api.github.com/repos/Code-for-Korea/c4k-blog/contents/test2.txt";
+        String url = "https://api.github.com/repos/Code-for-Korea/c4k-blog-front/contents/test2.txt";
 
         UriComponents uri = UriComponentsBuilder.fromHttpUrl(url).build();
 
