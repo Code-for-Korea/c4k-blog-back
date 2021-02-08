@@ -19,12 +19,10 @@ public class PostVO {
     private final List<String> tags;
 
     public PostVO(String title, String author, List<String> categories, List<String> tags, String content) {
-        this.title = title.replaceAll("'", "\\'");
-        this.author = author.replaceAll("'", "\\'");
+        this.title = title.replaceAll("\'", "\\'");
+        this.author = author.replaceAll("\'", "\\'");
         this.categories = categories;
         this.tags = tags;
-
-        System.out.println("escape:" + this.title);
 
         String msg = "" +
                 "---\n" +
