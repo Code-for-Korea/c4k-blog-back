@@ -94,7 +94,7 @@ public class GithubController {
             } catch (HttpClientErrorException e) {
                 result.put("error", true);
                 result.put("msg", e.getMessage());
-                result.put("status", e.getStatusCode());
+                result.put("status", e.getStatusCode().value());
             }
         }
         return new JSONResponse(result);
