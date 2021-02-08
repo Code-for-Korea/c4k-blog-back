@@ -24,10 +24,12 @@ public class PostVO {
         this.categories = categories;
         this.tags = tags;
 
+        System.out.println("escape:" + this.title);
+
         String msg = "" +
                 "---\n" +
-                "title: '" + this.title + "'\n" +
-                "author: '" + this.author + "'\n" +
+                "title: \"" + this.title + "\"\n" +
+                "author: \"" + this.author + "\"\n" +
                 "date: " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss")) + " +0900\n" +
                 "categories: " + this.categories + "\n" +
                 "tags: " + this.tags + "\n" +
