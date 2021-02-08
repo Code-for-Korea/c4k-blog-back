@@ -2,10 +2,7 @@ package kr.codefor.blog.domain;
 
 import lombok.Getter;
 
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Base64;
 import java.util.List;
@@ -19,8 +16,8 @@ public class PostVO {
     private final List<String> tags;
 
     public PostVO(String title, String author, List<String> categories, List<String> tags, String content) {
-        this.title = title.replaceAll("\'", "\\'");
-        this.author = author.replaceAll("\'", "\\'");
+        this.title = title.replaceAll("'", "\\'");
+        this.author = author.replaceAll("'", "\\'");
         this.categories = categories;
         this.tags = tags;
 
