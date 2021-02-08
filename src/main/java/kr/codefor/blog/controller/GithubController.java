@@ -219,7 +219,7 @@ public class GithubController {
             RestTemplate restTemplate = new RestTemplate();
 
             Session one = sessionService.findOne(gsession_id);
-            if (one.getRefreshToken().equals(ref_token)) {
+            if (one != null && one.getRefreshToken().equals(ref_token)) {
                 String url = "https://api.github.com/user";
 
                 UriComponents uri = UriComponentsBuilder.fromHttpUrl(url).build();
@@ -263,7 +263,16 @@ public class GithubController {
 
     @DeleteMapping("/authorize")
     public JSONResponse DeAuthenticateSession(HttpServletResponse response) {
-        clearCookies(response);
+        Cookie cookieGID = new Cookie("GSESSIONID", null);
+        cookieGID.setMaxAge(0);
+        cookieGID.setPath("/");
+        response.addCookie(cookieGID);
+
+        Cookie cookieREF = new Cookie("REFRESH_TOKEN", null);
+        cookieREF.setMaxAge(0);
+        cookieREF.setPath("/");
+        response.addCookie(cookieREF);
+
         HashMap<String, Object> result = new HashMap<>();
         result.put("msg", "브라우저에 저장된 인증 정보가 삭제되었습니다.");
         return new JSONResponse(result);
