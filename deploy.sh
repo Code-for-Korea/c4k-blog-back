@@ -1,5 +1,5 @@
-EDITOR_REPOSITORY=/home/ec2-user/c4k-blog
-PROJECT_NAME=editor
+EDITOR_REPOSITORY=/home/ec2-user
+PROJECT_NAME=c4k-blog-back
 
 
 echo "> Check pid of Running Application"
