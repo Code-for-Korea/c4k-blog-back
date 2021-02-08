@@ -1,4 +1,4 @@
-EDITOR_REPOSITORY=/home/ec2-user/c4k-blog-back
+EDITOR_REPOSITORY=/home/ec2-user/c4k-blog
 PROJECT_NAME=editor
 
 
@@ -12,15 +12,15 @@ sudo kill -15 $CURRENT_PID
 sleep 5
 
 echo "> Start Project Build"
-cd $EDITOR_REPOSITORY/
+cd $EDITOR_REPOSITORY/$PROJECT_NAME/
 sudo chmod 755 gradlew
 sudo ./gradlew build
 
 echo "> step1. Change Directory"
-cd $EDITOR_REPOSITORY
+cd $EDITOR_REPOSITORY/$PROJECT_NAME
 
 echo "> Copy Build File"
-sudo cp $EDITOR_REPOSITORY/build/libs/*.jar $EDITOR_REPOSITORY/
+sudo cp $EDITOR_REPOSITORY/$PROJECT_NAME/build/libs/*.jar $EDITOR_REPOSITORY/
 
 
 echo "> Deploy New Application"
