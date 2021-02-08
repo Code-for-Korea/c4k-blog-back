@@ -31,4 +31,4 @@ echo "> JAR Name: $JAR_NAME"
 
 
 sudo nohup java -jar \
-    $EDITOR_REPOSITORY/$JAR_NAME > sudo $EDITOR_REPOSITORY/editor_nohup.out 2>&1 &
+    $EDITOR_REPOSITORY/$JAR_NAME > $EDITOR_REPOSITORY/editor_nohup.out 2>&1 &
