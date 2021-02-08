@@ -213,6 +213,7 @@ public class GithubController {
             response.addCookie(cookieREF);
         } else {
             result.put("error", true);
+            result.put("ret", resultMap);
         }
         return new JSONResponse(result);
     }
