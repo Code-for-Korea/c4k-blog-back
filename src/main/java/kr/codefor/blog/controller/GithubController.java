@@ -99,10 +99,15 @@ public class GithubController {
             responseBody.put("content", post.getContent());
 
             HttpEntity<Map> requestEntity = new HttpEntity<Map>(responseBody, headers);
-            HttpEntity<Map> response = restTemplate.exchange(uri.toString(), HttpMethod.PUT, requestEntity, Map.class, responseBody);
 
-            result.put("msg", "success");
-            result.put("ret", response.getBody());
+            try {
+                HttpEntity<Map> responseEntity = restTemplate.exchange(uri.toString(), HttpMethod.PUT, requestEntity, Map.class, responseBody);
+                result.put("msg", responseEntity.getBody());
+            } catch (HttpClientErrorException e) {
+                result.put("error", true);
+                result.put("msg", e.getMessage());
+                result.put("status", e.getStatusCode());
+            }
         }
         return new JSONResponse(result);
     }
