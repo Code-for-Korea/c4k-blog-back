@@ -48,18 +48,6 @@ public class GithubController {
                 .toString();
     }
 
-    private void clearCookies(HttpServletResponse response) {
-        Cookie cookieGID = new Cookie("GSESSIONID", null);
-        cookieGID.setMaxAge(0);
-        cookieGID.setPath("/");
-        response.addCookie(cookieGID);
-
-        Cookie cookieREF = new Cookie("REFRESH_TOKEN", null);
-        cookieREF.setMaxAge(0);
-        cookieREF.setPath("/");
-        response.addCookie(cookieREF);
-    }
-
     @PostMapping("/post")
     public JSONResponse CreateNewPost(
             @CookieValue(value = "GSESSIONID", required = false) String gsession_id,
@@ -247,11 +235,27 @@ public class GithubController {
                     result.put("profile", responseEntity.getBody());
                 } catch (HttpClientErrorException e) {
                     result.put("error", true);
-                    clearCookies(response);
+                    Cookie cookieGID = new Cookie("GSESSIONID", null);
+                    cookieGID.setMaxAge(0);
+                    cookieGID.setPath("/");
+                    response.addCookie(cookieGID);
+
+                    Cookie cookieREF = new Cookie("REFRESH_TOKEN", null);
+                    cookieREF.setMaxAge(0);
+                    cookieREF.setPath("/");
+                    response.addCookie(cookieREF);
                 }
             } else {
                 result.put("error", true);
-                clearCookies(response);
+                Cookie cookieGID = new Cookie("GSESSIONID", null);
+                cookieGID.setMaxAge(0);
+                cookieGID.setPath("/");
+                response.addCookie(cookieGID);
+
+                Cookie cookieREF = new Cookie("REFRESH_TOKEN", null);
+                cookieREF.setMaxAge(0);
+                cookieREF.setPath("/");
+                response.addCookie(cookieREF);
             }
         }
         return new JSONResponse(result);
