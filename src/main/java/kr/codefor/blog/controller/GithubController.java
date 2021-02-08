@@ -73,11 +73,12 @@ public class GithubController {
         } else {
             System.out.println(post.getTitle());
             System.out.println(post.getContent());
-            String fileName = post.getTitle()
-                    .replaceAll("[^ 가-힣a-zA-Z0-9]", "")
-                    .replaceAll("\s", "-") + "-" + generateRandom(5) + ".md";
-            String url = "https://api.github.com/repos/Code-for-Korea/c4k-blog-front/contents/_posts/" +
+            String fileName =
                     LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd-")) +
+                            post.getTitle()
+                                    .replaceAll("[^ 가-힣a-zA-Z0-9]", "")
+                                    .replaceAll("\s", "-") + "-" + generateRandom(5) + ".md";
+            String url = "https://api.github.com/repos/Code-for-Korea/c4k-blog-front/contents/_posts/" +
                     fileName;
 
             UriComponents uri = UriComponentsBuilder.fromHttpUrl(url).build();
@@ -91,7 +92,7 @@ public class GithubController {
             headers.set("Authorization", "token " + one.getAccessToken());
 
             Map<String, String> responseBody = new HashMap<>();
-            responseBody.put("message", "[NEW] " + post.getAuthor() + " - " + fileName);
+            responseBody.put("message", "[NEW] " + fileName);
             responseBody.put("content", post.getContent());
 
             HttpEntity<Map> requestEntity = new HttpEntity<Map>(responseBody, headers);
@@ -222,7 +223,7 @@ public class GithubController {
             RestTemplate restTemplate = new RestTemplate();
 
             Session one = sessionService.findOne(gsession_id);
-            if(one.getRefreshToken().equals(ref_token)) {
+            if (one.getRefreshToken().equals(ref_token)) {
                 String url = "https://api.github.com/user";
 
                 UriComponents uri = UriComponentsBuilder.fromHttpUrl(url).build();
@@ -247,11 +248,12 @@ public class GithubController {
         }
         return new JSONResponse(result);
     }
+
     @DeleteMapping("/authorize")
     public JSONResponse DeAuthenticateSession(HttpServletResponse response) {
         clearCookies(response);
         HashMap<String, Object> result = new HashMap<>();
-        result.put("msg","브라우저에 저장된 인증 정보가 삭제되었습니다.");
+        result.put("msg", "브라우저에 저장된 인증 정보가 삭제되었습니다.");
         return new JSONResponse(result);
     }
 }
