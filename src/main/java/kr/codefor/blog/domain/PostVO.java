@@ -28,7 +28,7 @@ public class PostVO {
                 "---\n" +
                 "title: " + title + "\n" +
                 "author: " + author + "\n" +
-                "date: " + ZonedDateTime.of(LocalDateTime.now(), ZoneId.of("Asia/Seoul")).format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss")) + " +0900\n" +
+                "date: " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss")) + " +0900\n" +
                 "categories: " + categories + "\n" +
                 "tags: " + tags + "\n" +
                 "---\n" +
