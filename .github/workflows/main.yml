@@ -1,4 +1,4 @@
-name: Deploy to Production
+name: Deploy to Production(Front)
 
 on:
   push:
@@ -9,10 +9,6 @@ jobs:
   deploy:
     name: Build, Deploy to AWS EC2 Instance
     runs-on: [ubuntu-latest]
-
-    strategy:
-      matrix:
-        node-version: [12.16.x]
 
     steps:
       - name: Checkout
