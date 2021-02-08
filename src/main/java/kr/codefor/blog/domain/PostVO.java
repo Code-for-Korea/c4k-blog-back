@@ -19,18 +19,18 @@ public class PostVO {
     private final List<String> tags;
 
     public PostVO(String title, String author, List<String> categories, List<String> tags, String content) {
-        this.title = title;
-        this.author = author;
+        this.title = title.replaceAll("'", "\\'");
+        this.author = author.replaceAll("'", "\\'");
         this.categories = categories;
         this.tags = tags;
 
         String msg = "" +
                 "---\n" +
-                "title: " + title + "\n" +
-                "author: " + author + "\n" +
+                "title: '" + this.title + "'\n" +
+                "author: '" + this.author + "'\n" +
                 "date: " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss")) + " +0900\n" +
-                "categories: " + categories + "\n" +
-                "tags: " + tags + "\n" +
+                "categories: " + this.categories + "\n" +
+                "tags: " + this.tags + "\n" +
                 "---\n" +
                 content;
 
