@@ -1,4 +1,4 @@
-EDITOR_REPOSITORY=/home/ec2-user/c4k-blog-back
+EDITOR_REPOSITORY=/home/ec2-user/c4k-blog
 PROJECT_NAME=editor
 
 
