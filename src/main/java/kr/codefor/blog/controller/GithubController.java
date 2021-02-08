@@ -171,7 +171,10 @@ public class GithubController {
     }
 
     @PostMapping("/oauth")
-    public JSONResponse RenewingAccessTokenWithRefreshToken(@RequestBody AuthenticateVO authenticateVO) {
+    public JSONResponse RenewingAccessTokenWithRefreshToken(
+            HttpServletResponse response,
+            @RequestBody AuthenticateVO authenticateVO
+    ) {
         RestTemplate restTemplate = new RestTemplate();
 
         String url = "https://github.com/login/oauth/access_token";
@@ -188,6 +191,7 @@ public class GithubController {
 
         HashMap resultMap = restTemplate.postForObject(uri.toString(), responseBody, HashMap.class);
 
+        HashMap<String, Object> result = new HashMap<>();
         if (resultMap.get("error") == null) {
             sessionService.renewAccessToken(
                     one.getId(),
@@ -195,12 +199,21 @@ public class GithubController {
                     resultMap.get("refresh_token").toString()
             );
 
-            HashMap<String, Object> result = new HashMap<>();
-            result.put("session_id", one.getSessionId());
-            result.put("refresh_token", one.getRefreshToken());
-            return new JSONResponse(result);
+            result.put("msg", "success");
+
+            Cookie cookieGID = new Cookie("GSESSIONID", one.getSessionId());
+            cookieGID.setMaxAge(28800);
+            cookieGID.setPath("/");
+            response.addCookie(cookieGID);
+
+            Cookie cookieREF = new Cookie("REFRESH_TOKEN", one.getRefreshToken());
+            cookieREF.setMaxAge(15811200);
+            cookieREF.setPath("/");
+            response.addCookie(cookieREF);
+        } else {
+            result.put("error", true);
         }
-        return new JSONResponse(resultMap);
+        return new JSONResponse(result);
     }
 
     @PostMapping("/authorize")
