@@ -71,8 +71,6 @@ public class GithubController {
         if (one == null) {
             result.put("error", true);
         } else {
-            System.out.println(post.getTitle());
-            System.out.println(post.getContent());
             String fileName =
                     LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd-")) +
                             post.getTitle()
@@ -81,6 +79,9 @@ public class GithubController {
                             "-" + generateRandom(5) + ".md";
             String url = "https://api.github.com/repos/Code-for-Korea/c4k-blog-front/contents/_posts/" +
                     fileName;
+
+            System.out.println("fileName: " + fileName);
+            System.out.println("Title: " + post.getTitle());
 
             UriComponents uri = UriComponentsBuilder.fromHttpUrl(url).build();
 
