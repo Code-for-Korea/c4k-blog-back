@@ -11,15 +11,4 @@ public class ProfileVO {
     private final String name;
     private final String avatar_url;
     private final String bio;
-
-    @Override
-    public String toString() {
-        return "{" +
-                "id:'" + id + '\'' +
-                ", login:'" + login + '\'' +
-                ", name:'" + name + '\'' +
-                ", avatar_url:'" + avatar_url + '\'' +
-                ", bio:'" + bio + '\'' +
-                '}';
-    }
 }
