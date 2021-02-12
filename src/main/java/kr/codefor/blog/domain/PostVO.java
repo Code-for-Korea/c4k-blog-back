@@ -17,12 +17,16 @@ public class PostVO {
     private final List<String> categories;
     private final List<String> tags;
 
-    private String mappingHeader(String key, String value) {
-        return key + ": '" + value + "'\n";
-    }
-
-    private String mappingHeader(String key, String value, String delimiter) {
-        return key + ": " + delimiter + value + delimiter + "\n";
+    private String mappingHeader(Class<?> targetClass, String key, String... values) {
+        if (targetClass.isInstance(Object.class)) {
+            StringBuilder sb = new StringBuilder();
+            for (String v : values) {
+                sb.append("  ").append(v).append("\n");
+            }
+            return sb.toString();
+        } else if (targetClass.isInstance(String.class)) {
+            return key + ": '" + values[0] + "'\n";
+        }
     }
 
     public PostVO(String title, ProfileVO profile, List<String> categories, List<String> tags, String content) {
@@ -33,14 +37,20 @@ public class PostVO {
 
         String msg = "" +
                 "---\n" +
-                mappingHeader("title", this.title) +
-                mappingHeader("author", this.profile.toString(), "") +
-                mappingHeader("date",
-                        LocalDateTime.now().minusHours(9).format(
-                                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
-                        ) + " +0900") +
-                mappingHeader("categories", this.categories.toString()) +
-                mappingHeader("tags", this.tags.toString()) +
+                mappingHeader(String.class, "title", this.title) +
+                mappingHeader(Object.class, "author",
+                        mappingHeader(String.class, "id", this.profile.getId()),
+                        mappingHeader(String.class, "login", this.profile.getLogin()),
+                        mappingHeader(String.class, "name", this.profile.getName()),
+                        mappingHeader(String.class, "avatar_url", this.profile.getAvatar_url()),
+                        mappingHeader(String.class, "bio", this.profile.getBio())
+                ) +
+                mappingHeader(String.class, "date",
+                        LocalDateTime.now()
+                                .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+                ) +
+                mappingHeader(String.class, "categories", this.categories.toString()) +
+                mappingHeader(String.class, "tags", this.tags.toString()) +
                 "---\n" +
                 content;
 
