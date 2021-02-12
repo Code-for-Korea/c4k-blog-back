@@ -2,6 +2,7 @@ package kr.codefor.blog.domain;
 
 import lombok.Getter;
 
+import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Base64;
@@ -25,11 +26,14 @@ public class PostVO {
                 sb.append("  ").append(v);
             }
             return sb.toString();
-        } else if (targetClass.getClass().isInstance(String.class)) {
-            return key + ": \"" +
-                    values[0].replaceAll("[^ 가-힣a-zA-Z0-9]", "") + "\"\n";
+        } else if (
+                targetClass.isInstance(LocalDateTime.class) ||
+                        targetClass.isInstance(URL.class)
+        ) {
+            return key + ": \"" + values[0] + "\"\n";
         }
-        return "";
+        return key + ": \"" +
+                values[0].replaceAll("[^ 가-힣a-zA-Z0-9]", "") + "\"\n";
     }
 
     public PostVO(String title, ProfileVO profile, List<String> categories, List<String> tags, String content) {
@@ -45,10 +49,10 @@ public class PostVO {
                         mappingHeader(String.class, "id", this.profile.getId()),
                         mappingHeader(String.class, "login", this.profile.getLogin()),
                         mappingHeader(String.class, "name", this.profile.getName()),
-                        mappingHeader(String.class, "avatar_url", this.profile.getAvatar_url()),
+                        mappingHeader(URL.class, "avatar_url", this.profile.getAvatar_url()),
                         mappingHeader(String.class, "bio", this.profile.getBio())
                 ) +
-                mappingHeader(String.class, "date",
+                mappingHeader(LocalDateTime.class, "date",
                         LocalDateTime.now()
                                 .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
                 ) +
