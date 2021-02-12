@@ -11,20 +11,23 @@ import java.util.List;
 public class PostVO {
     private final String title;
     private final String content;
-    private final String author;
+    private final ProfileVO profile;
     private final List<String> categories;
     private final List<String> tags;
 
-    public PostVO(String title, String author, List<String> categories, List<String> tags, String content) {
+    public PostVO(String title, ProfileVO profile, List<String> categories, List<String> tags, String content) {
         this.title = title.replaceAll("'", "\\'");
-        this.author = author.replaceAll("'", "\\'");
+        this.profile = profile;
         this.categories = categories;
         this.tags = tags;
 
         String msg = "" +
                 "---\n" +
                 "title: '" + this.title + "'\n" +
-                "author: '" + this.author + "'\n" +
+                "author: '" + (
+                this.profile.getName().isEmpty()
+                        ? this.profile.getLogin()
+                        : this.profile.getName()) + "'\n" +
                 "date: " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss")) + " +0900\n" +
                 "categories: " + this.categories + "\n" +
                 "tags: " + this.tags + "\n" +
