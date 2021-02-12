@@ -11,7 +11,9 @@ import java.util.List;
 public class PostVO {
     private final String title;
     private final String content;
+
     private final ProfileVO profile;
+
     private final List<String> categories;
     private final List<String> tags;
 
@@ -34,8 +36,8 @@ public class PostVO {
                 mappingHeader("title", this.title) +
                 mappingHeader("author", this.profile.toString(), "") +
                 mappingHeader("date",
-                        LocalDateTime.now().format(
-                                DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss")
+                        LocalDateTime.now().minusHours(9).format(
+                                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
                         ) + " +0900") +
                 mappingHeader("categories", this.categories.toString()) +
                 mappingHeader("tags", this.tags.toString()) +
