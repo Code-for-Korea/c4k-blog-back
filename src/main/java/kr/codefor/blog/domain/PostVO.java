@@ -5,6 +5,7 @@ import lombok.Getter;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class PostVO {
     private final List<String> tags;
 
     private String mappingHeader(Class<?> targetClass, String key, String... values) {
-        if (targetClass.isInstance(Object.class)) {
+        if (targetClass.equals(Object.class)) {
             StringBuilder sb = new StringBuilder();
             sb.append(key).append(":").append("\n");
             for (String v : values) {
@@ -27,10 +28,13 @@ public class PostVO {
             }
             return sb.toString();
         } else if (
-                targetClass.isInstance(LocalDateTime.class) ||
-                        targetClass.isInstance(URL.class)
+                targetClass.equals(LocalDateTime.class) ||
+                        targetClass.equals(URL.class)
         ) {
             return key + ": \"" + values[0] + "\"\n";
+        } else if (targetClass.equals(Arrays.class)) {
+            String[] split = values[0].replaceAll("[\\[\\]]", "").split(",");
+            return key + ": " + Arrays.toString(split) + "\n";
         }
         return key + ": \"" +
                 values[0].replaceAll("[^ 가-힣a-zA-Z0-9]", "") + "\"\n";
@@ -56,8 +60,8 @@ public class PostVO {
                         LocalDateTime.now()
                                 .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
                 ) +
-                mappingHeader(String.class, "categories", this.categories.toString()) +
-                mappingHeader(String.class, "tags", this.tags.toString()) +
+                mappingHeader(Arrays.class, "categories", this.categories.toString()) +
+                mappingHeader(Arrays.class, "tags", this.tags.toString()) +
                 "---\n" +
                 content;
 
