@@ -19,6 +19,10 @@ public class PostVO {
         return key + ": '" + value + "'\n";
     }
 
+    private String mappingHeader(String key, String value, String delimiter) {
+        return key + ": " + delimiter + value + delimiter + "\n";
+    }
+
     public PostVO(String title, ProfileVO profile, List<String> categories, List<String> tags, String content) {
         this.title = title.replaceAll("'", "\\'");
         this.profile = profile;
@@ -28,7 +32,7 @@ public class PostVO {
         String msg = "" +
                 "---\n" +
                 mappingHeader("title", this.title) +
-                mappingHeader("author", this.profile.toString()) +
+                mappingHeader("author", this.profile.toString(), "") +
                 mappingHeader("date",
                         LocalDateTime.now().format(
                                 DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss")
