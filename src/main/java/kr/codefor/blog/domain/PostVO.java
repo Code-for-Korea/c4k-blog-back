@@ -27,6 +27,7 @@ public class PostVO {
         } else if (targetClass.isInstance(String.class)) {
             return key + ": '" + values[0] + "'\n";
         }
+        return "";
     }
 
     public PostVO(String title, ProfileVO profile, List<String> categories, List<String> tags, String content) {
