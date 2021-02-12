@@ -24,8 +24,8 @@ public class PostVO {
                 sb.append("  ").append(v).append("\n");
             }
             return sb.toString();
-        } else if (targetClass.isInstance(String.class)) {
-            return key + ": '" + values[0] + "'\n";
+        } else if (targetClass.getClass().isInstance(String.class)) {
+            return key + ": \"" + values[0] + "\"\n";
         }
         return "";
     }
