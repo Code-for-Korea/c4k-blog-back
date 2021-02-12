@@ -20,12 +20,13 @@ public class PostVO {
     private String mappingHeader(Class<?> targetClass, String key, String... values) {
         if (targetClass.isInstance(Object.class)) {
             StringBuilder sb = new StringBuilder();
+            sb.append(key).append("\n");
             for (String v : values) {
-                sb.append("  ").append(v).append("\n");
+                sb.append("  ").append(v);
             }
             return sb.toString();
         } else if (targetClass.getClass().isInstance(String.class)) {
-            return key + ": \"" + values[0] + "\"\n";
+            return key + ": \"" + values[0].replaceAll("\"", "\\\"") + "\"\n";
         }
         return "";
     }
