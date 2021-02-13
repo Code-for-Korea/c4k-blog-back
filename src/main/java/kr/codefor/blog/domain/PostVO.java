@@ -37,7 +37,7 @@ public class PostVO {
             return key + ": " + Arrays.toString(split) + "\n";
         }
         return key + ": \"" +
-                values[0].replaceAll("[^ 가-힣a-zA-Z0-9]", "") + "\"\n";
+                values[0].replaceAll("['\"]", "") + "\"\n";
     }
 
     public PostVO(String title, ProfileVO profile, List<String> categories, List<String> tags, String content) {
