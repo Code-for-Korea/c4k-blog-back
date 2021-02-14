@@ -106,7 +106,6 @@ public class GithubController {
     public JSONResponse CreateNewImage(
             @CookieValue(value = "GSESSIONID", required = false) String gsession_id,
             @RequestBody ImageVO image) {
-        System.out.println(image.getImageEncode());
         HashMap<String, Object> result = new HashMap<>();
 
         Session one = sessionService.findOne(gsession_id);
@@ -116,7 +115,7 @@ public class GithubController {
         } else {
             String nowDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
             String fileName = nowDate + "-" + generateRandom(5);
-            MimeType mimeType = MimeTypeUtils.parseMimeType(image.getMIME());
+            MimeType mimeType = MimeTypeUtils.parseMimeType(image.getMime());
             String fileExtension = mimeType.getSubtype();
             String url = "https://api.github.com/repos/Code-for-Korea/c4k-blog-front/contents/assets/img/posts/" +
                     nowDate + "/" + fileName + "." + fileExtension;
