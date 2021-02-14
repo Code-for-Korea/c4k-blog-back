@@ -29,3 +29,4 @@ server:
   max-http-header-size: 1MB
   tomcat:
     max-http-form-post-size: 20MB
+    max-swallow-size: 20MB
