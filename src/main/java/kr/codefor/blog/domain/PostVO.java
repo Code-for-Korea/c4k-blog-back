@@ -63,7 +63,10 @@ public class PostVO {
                 mappingHeader(Arrays.class, "categories", this.categories.toString()) +
                 mappingHeader(Arrays.class, "tags", this.tags.toString()) +
                 "---\n" +
-                content;
+                content.replaceAll(
+                        "\\(https://raw.githubusercontent.com/Code-for-Korea/c4k-blog-front/main/assets/img/posts/",
+                        "(/assets/img/posts/"
+                );
 
         Base64.Encoder encoder = Base64.getEncoder();
         byte[] encodedBytes = encoder.encode(msg.getBytes());
