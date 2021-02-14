@@ -7,5 +7,5 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ImageVO {
     private final String imageEncode;
-    private final String extension;
+    private final String MIME;
 }

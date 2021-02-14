@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MimeType;
+import org.springframework.util.MimeTypeUtils;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
@@ -112,9 +114,11 @@ public class GithubController {
             result.put("error", true);
         } else {
             String nowDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-            String fileName = nowDate + "-" + generateRandom(5) + "." + image.getExtension().replaceAll("\\.", "");
+            String fileName = nowDate + "-" + generateRandom(5);
+            MimeType mimeType = MimeTypeUtils.parseMimeType(image.getMIME());
+            String fileExtension = mimeType.getSubtype();
             String url = "https://api.github.com/repos/Code-for-Korea/c4k-blog-front/contents/assets/img/posts/" +
-                    nowDate + "/" + fileName;
+                    nowDate + "/" + fileName + "." + fileExtension;
 
             UriComponents uri = UriComponentsBuilder.fromHttpUrl(url).build();
 
