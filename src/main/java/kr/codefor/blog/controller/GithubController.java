@@ -100,6 +100,50 @@ public class GithubController {
         return new JSONResponse(result);
     }
 
+    @PostMapping("/image")
+    public JSONResponse CreateNewImage(
+            @CookieValue(value = "GSESSIONID", required = false) String gsession_id,
+            @RequestParam ImageVO image) {
+        HashMap<String, Object> result = new HashMap<>();
+
+        Session one = sessionService.findOne(gsession_id);
+
+        if (one == null) {
+            result.put("error", true);
+        } else {
+            String nowDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            String fileName = nowDate + "-" + generateRandom(5) + "." + image.getExtension().replaceAll("\\.", "");
+            String url = "https://api.github.com/repos/Code-for-Korea/c4k-blog-front/contents/assets/img/posts/" +
+                    nowDate + "/" + fileName;
+
+            UriComponents uri = UriComponentsBuilder.fromHttpUrl(url).build();
+
+            RestTemplate restTemplate = new RestTemplate();
+            restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.set("accept", "application/vnd.github.v3+json");
+            headers.set("Authorization", "token " + one.getAccessToken());
+
+            Map<String, String> responseBody = new HashMap<>();
+            responseBody.put("message", "[NEW] " + fileName);
+            responseBody.put("content", image.getImageEncode());
+
+            HttpEntity<Map> requestEntity = new HttpEntity<Map>(responseBody, headers);
+
+            try {
+                HttpEntity<Map> responseEntity = restTemplate.exchange(uri.toString(), HttpMethod.PUT, requestEntity, Map.class, responseBody);
+                result.put("msg", responseEntity.getBody());
+            } catch (HttpClientErrorException e) {
+                result.put("error", true);
+                result.put("msg", e.getMessage());
+                result.put("status", e.getStatusCode().value());
+            }
+        }
+        return new JSONResponse(result);
+    }
+
     @PostMapping("/delete-test")
     public Map<String, Object> DeleteTest() {
         HashMap<String, Object> result = new HashMap<String, Object>();
