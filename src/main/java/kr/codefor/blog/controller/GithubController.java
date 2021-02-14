@@ -131,7 +131,7 @@ public class GithubController {
             headers.set("Authorization", "token " + one.getAccessToken());
 
             Map<String, String> responseBody = new HashMap<>();
-            responseBody.put("message", "[NEW] " + fileName);
+            responseBody.put("message", "[NEW] " + fileName + "." + fileExtension);
             responseBody.put("content", image.getImageEncode());
 
             HttpEntity<Map> requestEntity = new HttpEntity<Map>(responseBody, headers);
