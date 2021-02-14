@@ -103,7 +103,7 @@ public class GithubController {
     @PostMapping("/image")
     public JSONResponse CreateNewImage(
             @CookieValue(value = "GSESSIONID", required = false) String gsession_id,
-            @RequestParam ImageVO image) {
+            @RequestBody ImageVO image) {
         HashMap<String, Object> result = new HashMap<>();
 
         Session one = sessionService.findOne(gsession_id);
