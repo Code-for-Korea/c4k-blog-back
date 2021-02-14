@@ -106,6 +106,7 @@ public class GithubController {
     public JSONResponse CreateNewImage(
             @CookieValue(value = "GSESSIONID", required = false) String gsession_id,
             @RequestBody ImageVO image) {
+        System.out.println(image.getImageEncode());
         HashMap<String, Object> result = new HashMap<>();
 
         Session one = sessionService.findOne(gsession_id);
