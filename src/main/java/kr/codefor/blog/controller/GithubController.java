@@ -61,15 +61,16 @@ public class GithubController {
         if (one == null) {
             result.put("error", true);
         } else {
+            String nowDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
             String fileName =
-                    LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd-")) +
+                    nowDate +
                             post.getTitle()
                                     .replaceAll("[^ 가-힣a-zA-Z0-9]", "")
                                     .trim()
                                     .replaceAll("\s", "-") +
                             "-" + generateRandom(5) + ".md";
             String url = "https://api.github.com/repos/Code-for-Korea/c4k-blog-front/contents/_posts/" +
-                    fileName;
+                    nowDate + "/" + fileName;
 
             System.out.println("fileName: " + fileName);
             System.out.println("Title: " + post.getTitle());
