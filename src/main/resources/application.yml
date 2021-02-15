@@ -26,9 +26,8 @@ server:
 
   port: 8443
   http2:
-    enabled: false
+    enabled: true
   max-http-header-size: 1MB
   tomcat:
     max-http-form-post-size: 20MB
     max-swallow-size: 20MB
-    connection-timeout: 99999999
