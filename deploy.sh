@@ -14,7 +14,7 @@ sleep 5
 echo "> Start Project Build"
 cd $EDITOR_REPOSITORY/$PROJECT_NAME/
 sudo chmod 755 gradlew
-sudo ./gradlew build
+sudo ./gradlew build -x test
 
 echo "> step1. Change Directory"
 cd $EDITOR_REPOSITORY/$PROJECT_NAME
